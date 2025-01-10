@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <OutputPath>D:\Games\Steam\steamapps\common\I Expect You To Die 2\Mods</OutputPath>
+    <OutputPath>C:\Program Files (x86)\Steam\steamapps\common\I Expect You To Die 2\Mods</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -20,12 +20,12 @@
   <ItemGroup>
     <PackageReference Include="LavaGang.MelonLoader" Version="0.6.6" />
     <PackageReference Include="Lib.Harmony" Version="2.3.3" />
+    <PackageReference Include="OWO" Version="2.4.2" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>D:\Games\Steam\steamapps\common\I Expect You To Die 2\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\melonloader_dlls\IEYTD2\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="MelonLoader">
       <HintPath>D:\Games\Steam\steamapps\common\I Expect You To Die 2\MelonLoader\net6\MelonLoader.dll</HintPath>
@@ -36,17 +36,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>D:\Games\Steam\steamapps\common\I Expect You To Die 2\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\melonloader_dlls\IEYTD2\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>D:\Games\Steam\steamapps\common\I Expect You To Die 2\MelonLoader\Il2CppAssemblies\UnityEngine.PhysicsModule.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\melonloader_dlls\IEYTD2\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="XCOPY &quot;$(ProjectDir)bHaptics\&quot; &quot;$(TargetDir)bHaptics\&quot; /S /Y" />
-  </Target>
   
 </Project>

@@ -24,7 +24,7 @@ using Il2CppSG.Phoenix.Assets.Code.MovieSet;
 using Il2CppSG.Phoenix.Assets.Code.Utility;
 using Il2Cpp;
 
-[assembly: MelonInfo(typeof(IEYTD2_bhaptics.IEYTD2_bhaptics), "IEYTD2Bhaptics", "2.0.0", "Florian Fahrenberger")]
+[assembly: MelonInfo(typeof(IEYTD2_bhaptics.IEYTD2_bhaptics), "OWO_IEYTD2", "0.0.1", "OWO Game")]
 [assembly: MelonGame("Schell Games", "I Expect You To Die 2")]
 
 namespace IEYTD2_bhaptics
