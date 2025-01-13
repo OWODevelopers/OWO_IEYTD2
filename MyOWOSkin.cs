@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Il2CppSG.Phoenix.Assets.Code.Backstage;
 using MelonLoader;
 using OWOGame;
 
@@ -181,12 +182,12 @@ namespace MyOWOSkin
         public void Feel(String key, float intensity = 1.0f, float duration = 1.0f)
         {
             OWO.Send(OWOGame.BakedSensation.Dart);
-
-            if (FeedbackMap.ContainsKey(key))
-            {
-                OWO.Send(FeedbackMap[key]);
-            }
-            else LOG("Feedback not registered: " + key);
+            LOG("Dart sended");
+            //if (FeedbackMap.ContainsKey(key))
+            //{
+            //    OWO.Send(FeedbackMap[key]);
+            //}
+            //else LOG("Feedback not registered: " + key);
         }
 
         public void GunRecoil(bool isRightHand, float intensity = 1.0f)
