@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Net;
 using MelonLoader;
+using OWOGame;
 
-namespace MyBhapticsTactsuit
+namespace MyOWOSkin
 {
-    public class TactsuitVR
+    public class OWOSkin
     {
         public bool suitDisabled = true;
         public bool systemInitialized = false;
@@ -16,8 +12,74 @@ namespace MyBhapticsTactsuit
         private static ManualResetEvent NeckTingle_mrse = new ManualResetEvent(false);
         private static ManualResetEvent TelekinesisR_mrse = new ManualResetEvent(false);
         private static ManualResetEvent TelekinesisL_mrse = new ManualResetEvent(false);
-        public Dictionary<String, FileInfo> FeedbackMap = new Dictionary<String, FileInfo>();
+        public Dictionary<String, Sensation> FeedbackMap = new Dictionary<String, Sensation>();
 
+
+        public OWOSkin()
+        {
+            InitializeOWO();
+        }
+
+        private async void InitializeOWO()
+        {
+            LOG("Initializing OWO skin");
+
+            var gameAuth = GameAuth.Create(AllBakedSensations()).WithId("0"); ;
+
+            OWO.Configure(gameAuth);
+            string[] myIPs = getIPsFromFile("OWO_Manual_IP.txt");
+            if (myIPs.Length == 0) await OWO.AutoConnect();
+            else
+            {
+                await OWO.Connect(myIPs);
+            }
+
+            if (OWO.ConnectionState == ConnectionState.Connected)
+            {
+                suitDisabled = false;
+                LOG("OWO suit connected.");
+                OWO.Send(OWOGame.BakedSensation.Dart);
+            }
+            if (suitDisabled) LOG("OWO is not enabled?!?!");
+        }
+
+        public BakedSensation[] AllBakedSensations()
+        {
+            var result = new List<BakedSensation>();
+
+            foreach (var sensation in FeedbackMap.Values)
+            {
+                if (sensation is BakedSensation baked)
+                {
+                    LOG("Registered baked sensation: " + baked.name);
+                    result.Add(baked);
+                }
+                else
+                {
+                    LOG("Sensation not baked? " + sensation);
+                    continue;
+                }
+            }
+            return result.ToArray();
+        }
+
+        public string[] getIPsFromFile(string filename)
+        {
+            List<string> ips = new List<string>();
+            string filePath = Directory.GetCurrentDirectory() + "\\Mods\\" + filename;
+            if (File.Exists(filePath))
+            {
+                LOG("Manual IP file found: " + filePath);
+                var lines = File.ReadLines(filePath);
+                foreach (var line in lines)
+                {
+                    IPAddress address;
+                    if (IPAddress.TryParse(line, out address)) ips.Add(line);
+                    else LOG("IP not valid? ---" + line + "---");
+                }
+            }
+            return ips.ToArray();
+        }
 
         public void HeartBeatFunc()
         {
@@ -58,21 +120,21 @@ namespace MyBhapticsTactsuit
             }
         }
 
-        public TactsuitVR()
-        {
-            LOG("Initializing suit");
-            suitDisabled = false;
-            RegisterAllTactFiles();
-            LOG("Starting HeartBeat and NeckTingle thread...");
-            Thread HeartBeatThread = new Thread(HeartBeatFunc);
-            HeartBeatThread.Start();
-            Thread NeckTingleThread = new Thread(NeckTingleFunc);
-            NeckTingleThread.Start();
-            Thread TeleRThread = new Thread(TelekinesisRFunc);
-            TeleRThread.Start();
-            Thread TeleLThread = new Thread(TelekinesisLFunc);
-            TeleLThread.Start();
-        }
+        //public OWOSkin()
+        //{
+        //    LOG("Initializing suit");
+        //    suitDisabled = false;
+        //    RegisterAllTactFiles();
+        //    LOG("Starting HeartBeat and NeckTingle thread...");
+        //    Thread HeartBeatThread = new Thread(HeartBeatFunc);
+        //    HeartBeatThread.Start();
+        //    Thread NeckTingleThread = new Thread(NeckTingleFunc);
+        //    NeckTingleThread.Start();
+        //    Thread TeleRThread = new Thread(TelekinesisRFunc);
+        //    TeleRThread.Start();
+        //    Thread TeleLThread = new Thread(TelekinesisLFunc);
+        //    TeleLThread.Start();
+        //}
 
         public void LOG(string logStr)
         {
@@ -83,51 +145,36 @@ namespace MyBhapticsTactsuit
 
         void RegisterAllTactFiles()
         {
-            string configPath = Directory.GetCurrentDirectory() + "\\Mods\\bHaptics";
+            string configPath = Directory.GetCurrentDirectory() + "\\Mods\\OWO";
             DirectoryInfo d = new DirectoryInfo(configPath);
-            FileInfo[] Files = d.GetFiles("*.tact", SearchOption.AllDirectories);
+            FileInfo[] Files = d.GetFiles("*.owo", SearchOption.AllDirectories);
             for (int i = 0; i < Files.Length; i++)
             {
                 string filename = Files[i].Name;
                 string fullName = Files[i].FullName;
                 string prefix = Path.GetFileNameWithoutExtension(filename);
-                // LOG("Trying to register: " + prefix + " " + fullName);
                 if (filename == "." || filename == "..")
                     continue;
                 string tactFileStr = File.ReadAllText(fullName);
                 try
                 {
-                    //bHapticsLib.bHapticsManager.RegisterPatternFromJson(prefix, tactFileStr);
-                    LOG("Pattern registered: " + prefix);
+                    Sensation test = Sensation.Parse(tactFileStr);
+                    FeedbackMap.Add(prefix, test);
                 }
                 catch (Exception e) { LOG(e.ToString()); }
 
-                FeedbackMap.Add(prefix, Files[i]);
             }
+
             systemInitialized = true;
-            //PlaybackHaptics("HeartBeat");
         }
 
-        public void PlaybackHaptics(String key, float intensity = 1.0f, float duration = 1.0f)
+        public void Feel(String key, float intensity = 1.0f, float duration = 1.0f)
         {
             if (FeedbackMap.ContainsKey(key))
             {
-                if ((intensity != 1.0f)|(duration != 1.0f))
-                {
-                    //bHapticsLib.ScaleOption scaleOption = new bHapticsLib.ScaleOption(intensity, duration);
-                    //float locationAngle = 0.0f;
-                    //float locationHeight = 0.0f;
-                    //bHapticsLib.RotationOption rotationOption = new bHapticsLib.RotationOption(locationAngle, locationHeight);
-                    //bHapticsLib.bHapticsManager.PlayRegistered(key, key, scaleOption);
-                }
-                
-                // LOG("Playing back: " + key);
-                //bHapticsLib.bHapticsManager.PlayRegistered(key);
+                OWO.Send(FeedbackMap[key]);
             }
-            else
-            {
-                LOG("Feedback not registered: " + key);
-            }
+            else LOG("Feedback not registered: " + key);
         }
 
         public void GunRecoil(bool isRightHand, float intensity = 1.0f)

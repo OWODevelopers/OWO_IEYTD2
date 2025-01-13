@@ -1,43 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MelonLoader;
+﻿using MelonLoader;
 using HarmonyLib;
-
-using MyBhapticsTactsuit;
+using MyOWOSkin;
 
 using UnityEngine;
 using Il2CppSG.Phoenix.Assets.Code.InputManagement;
 using Il2CppSG.Phoenix.Assets.Code.Interactables;
 using Il2CppSG.Phoenix.Assets.Code.WorldAttributes;
 using Il2CppSG.Phoenix.Assets.Code.WorldAttributes.PlayerManagement;
-using Il2CppSG.Phoenix.Assets.Code.WorldAttributes.Liquids;
-
-using Il2CppSG.Phoenix.Assets.Code.Backstage;
 using Il2CppSG.Phoenix.Assets.Code.PrivateJet;
 using Il2CppSG.Phoenix.Assets.Code.Elevator;
-using Il2CppSG.Phoenix.Assets.Code.Shop;
-using Il2CppSG.Phoenix.Assets.Code.WineCellar;
-using Il2CppSG.Phoenix.Assets.Code.MovieSet;
-using Il2CppSG.Phoenix.Assets.Code.Utility;
-using Il2Cpp;
 
-[assembly: MelonInfo(typeof(IEYTD2_bhaptics.IEYTD2_bhaptics), "OWO_IEYTD2", "0.0.1", "OWO Game")]
+[assembly: MelonInfo(typeof(OWO_IEYTD2.OWO_IEYTD2), "OWO_IEYTD2", "0.0.1", "OWO Game")]
 [assembly: MelonGame("Schell Games", "I Expect You To Die 2")]
 
-namespace IEYTD2_bhaptics
+namespace OWO_IEYTD2
 {
-    public class IEYTD2_bhaptics : MelonMod
+    public class OWO_IEYTD2 : MelonMod
     {
-        public static TactsuitVR tactsuitVr = null!;
+        public static OWOSkin owoSkin = null!;
         public static bool shooterLoaded = false;
 
         public override void OnInitializeMelon()
         {
-            tactsuitVr = new TactsuitVR();
-            tactsuitVr.PlaybackHaptics("HeartBeat");
+            owoSkin = new OWOSkin();
+            owoSkin.Feel("HeartBeat");
         }
 
         #region Player hit
@@ -50,7 +36,7 @@ namespace IEYTD2_bhaptics
             {
                 //tactsuitVr.LOG("ExplosionImpact");
                 //tactsuitVr.LOG(damageData.DeathDescription);
-                tactsuitVr.PlaybackHaptics("ExplosionFace");
+                owoSkin.Feel("ExplosionFace");
             }
         }
 
@@ -61,8 +47,8 @@ namespace IEYTD2_bhaptics
             public static void Postfix(DamageData damageData)
             {
                 //tactsuitVr.LOG(damageData.DamageRate.ToString());
-                if (!tactsuitVr.IsPlaying("HitByLaser"))
-                    { tactsuitVr.PlaybackHaptics("HitByLaser"); }
+                if (!owoSkin.IsPlaying("HitByLaser"))
+                    { owoSkin.Feel("HitByLaser"); }
             }
         }
 
@@ -74,7 +60,7 @@ namespace IEYTD2_bhaptics
             {
                 //tactsuitVr.LOG("PenetratorImpact");
                 //tactsuitVr.LOG(damageData.DeathDescription);
-                tactsuitVr.PlaybackHaptics("ArrowPierce");
+                owoSkin.Feel("ArrowPierce");
             }
         }
 
@@ -86,8 +72,7 @@ namespace IEYTD2_bhaptics
             {
                 //tactsuitVr.LOG("x: " + impactDirection.x.ToString() + " y: " + impactDirection.y.ToString() + " z: " + impactDirection.z.ToString());
                 //tactsuitVr.LOG(damageData.DeathDescription);
-                tactsuitVr.StopThreads();
-                tactsuitVr.PlaybackHaptics("BulletHit");
+                owoSkin.Feel("BulletHit");
             }
         }
 
@@ -100,36 +85,36 @@ namespace IEYTD2_bhaptics
                 String damageName = damageData.name;
                 if (damageName.Contains("GasDamage")|damageName.Contains("Suffocation") | damageName.Contains("PoisonGas"))
                 {
-                    tactsuitVr.StartHeartBeat();
-                    if (!tactsuitVr.IsPlaying("GasDeath")) { tactsuitVr.PlaybackHaptics("GasDeath"); }
+                    //owoSkin.StartHeartBeat();
+                    if (!owoSkin.IsPlaying("GasDeath")) { owoSkin.Feel("GasDeath"); }
                     return;
                 }
                 if (damageName.Contains("Flame") | damageName.Contains("Fire"))
                 {
                     //tactsuitVr.StartHeartBeat();
-                    if (!tactsuitVr.IsPlaying("FlameThrower")) { tactsuitVr.PlaybackHaptics("FlameThrower"); }
+                    if (!owoSkin.IsPlaying("FlameThrower")) { owoSkin.Feel("FlameThrower"); }
                     return;
                 }
                 if (damageName.Contains("PendulumDamage"))
                 {
-                    tactsuitVr.PlaybackHaptics("AxeHit");
+                    owoSkin.Feel("AxeHit");
                     return;
                 }
                 if (damageName.Contains("Electrocution"))
                 {
-                    tactsuitVr.PlaybackHaptics("Electrocution");
+                    owoSkin.Feel("Electrocution");
                     return;
                 }
                 if (damageName.Contains("MS_ExplosiveTntDamage"))
                 {
-                    tactsuitVr.PlaybackHaptics("ExplosionFace");
+                    owoSkin.Feel("ExplosionFace");
                     return;
                 }
                 if (damageName.Contains("DartDamage")|damageName.Contains("Explosion")|damageName.Contains("Grenade")|
                     damageName.Contains("LaserDamage")|damageName.Contains("CablesCut") | damageName.Contains("ContinuousLaser")|
                     damageName.Contains("LaserSight")| damageName.Contains("JuniperShootDamage") | (damageName == "Death_PrivateJet_EngineDestroyed"))
                     { return; }
-                tactsuitVr.LOG("Unknown Damage: " + damageData.name);
+                owoSkin.LOG("Unknown Damage: " + damageData.name);
             }
         }
 
@@ -139,7 +124,7 @@ namespace IEYTD2_bhaptics
             [HarmonyPostfix]
             public static void Postfix(DamageData damageData)
             {
-                tactsuitVr.StopHeartBeat();
+                owoSkin.StopHeartBeat();
             }
         }
 
@@ -149,7 +134,7 @@ namespace IEYTD2_bhaptics
             [HarmonyPostfix]
             public static void Postfix()
             {
-                tactsuitVr.StopThreads();
+                owoSkin.StopThreads();
             }
         }
 
@@ -194,7 +179,7 @@ namespace IEYTD2_bhaptics
                     if (__instance.heldHand.HandIndex == 1) { isRight = true; }
                     //tactsuitVr.LOG("Interactable name: " + __instance.name);
                     //tactsuitVr.LOG(" ");
-                    tactsuitVr.GunRecoil(isRight, 0.6f);
+                    owoSkin.GunRecoil(isRight, 0.6f);
                 }
             }
         }
@@ -219,8 +204,8 @@ namespace IEYTD2_bhaptics
             {
                 bool isRight = false;
                 if (hand.HandIndex == 1) { isRight = true; }
-                if (hand.TelekinesisEnabled) { tactsuitVr.StartTelekinesis(isRight); }
-                else { tactsuitVr.StopTelekinesis(isRight); }
+                if (hand.TelekinesisEnabled) { owoSkin.StartTelekinesis(isRight); }
+                else { owoSkin.StopTelekinesis(isRight); }
             }
         }
 
@@ -232,7 +217,7 @@ namespace IEYTD2_bhaptics
             {
                 bool isRight = false;
                 if (hand.HandIndex == 1) { isRight = true; }
-                if (hand.TelekinesisEnabled) { tactsuitVr.StopTelekinesis(isRight); }
+                if (hand.TelekinesisEnabled) { owoSkin.StopTelekinesis(isRight); }
             }
         }
 
@@ -244,7 +229,7 @@ namespace IEYTD2_bhaptics
             {
                 bool isRight = false;
                 if (hand.HandIndex == 1) { isRight = true; }
-                tactsuitVr.StopTelekinesis(isRight);
+                owoSkin.StopTelekinesis(isRight);
             }
         }
 
@@ -254,7 +239,7 @@ namespace IEYTD2_bhaptics
             [HarmonyPostfix]
             public static void Postfix()
             {
-                tactsuitVr.PlaybackHaptics("Eating");
+                owoSkin.Feel("Eating");
             }
         }
 
@@ -269,11 +254,11 @@ namespace IEYTD2_bhaptics
                 catch { return; }
                 if (objectName.Contains("Cigar"))
                 {
-                    tactsuitVr.PlaybackHaptics("Smoking");
+                    owoSkin.Feel("Smoking");
                 }
                 else if (objectName.Contains("Glass")|objectName.Contains("Bottle") | objectName.Contains("Cup") | objectName.Contains("Straw"))
                 {
-                    tactsuitVr.PlaybackHaptics("Drinking");
+                    owoSkin.Feel("Drinking");
                 }
                 else
                 {
@@ -288,7 +273,7 @@ namespace IEYTD2_bhaptics
             [HarmonyPostfix]
             public static void Postfix()
             {
-                tactsuitVr.PlaybackHaptics("ExplosionUp");
+                owoSkin.Feel("ExplosionUp");
             }
         }
 
@@ -302,7 +287,7 @@ namespace IEYTD2_bhaptics
             [HarmonyPostfix]
             public static void Postfix()
             {
-                tactsuitVr.StartNeckTingle();
+                owoSkin.StartNeckTingle();
             }
         }
 
@@ -312,7 +297,7 @@ namespace IEYTD2_bhaptics
             [HarmonyPostfix]
             public static void Postfix()
             {
-                tactsuitVr.StopNeckTingle();
+                owoSkin.StopNeckTingle();
             }
         }
 
@@ -355,7 +340,7 @@ namespace IEYTD2_bhaptics
             [HarmonyPostfix]
             public static void Postfix()
             {
-                tactsuitVr.PlaybackHaptics("Thunder");
+                owoSkin.Feel("Thunder");
             }
         }
 
@@ -365,7 +350,7 @@ namespace IEYTD2_bhaptics
             [HarmonyPostfix]
             public static void Postfix()
             {
-                tactsuitVr.PlaybackHaptics("ExplosionFace");
+                owoSkin.Feel("ExplosionFace");
             }
         }
 
@@ -393,7 +378,7 @@ namespace IEYTD2_bhaptics
             [HarmonyPostfix]
             public static void Postfix()
             {
-                tactsuitVr.PlaybackHaptics("ElevatorTingle");
+                owoSkin.Feel("ElevatorTingle");
             }
         }
 
@@ -416,7 +401,7 @@ namespace IEYTD2_bhaptics
             public static void Postfix(Transform transform)
             {
                 //tactsuitVr.LOG("FallToPosition");
-                tactsuitVr.PlaybackHaptics("ElevatorFall");
+                owoSkin.Feel("ElevatorFall");
             }
         }
 
@@ -427,7 +412,7 @@ namespace IEYTD2_bhaptics
             public static void Postfix(float amount)
             {
                 //tactsuitVr.LOG("Fall: " + amount.ToString());
-                tactsuitVr.PlaybackHaptics("ElevatorFall");
+                owoSkin.Feel("ElevatorFall");
             }
         }
 
