@@ -9,6 +9,7 @@ using Il2CppSG.Phoenix.Assets.Code.WorldAttributes;
 using Il2CppSG.Phoenix.Assets.Code.WorldAttributes.PlayerManagement;
 using Il2CppSG.Phoenix.Assets.Code.PrivateJet;
 using Il2CppSG.Phoenix.Assets.Code.Elevator;
+using static MelonLoader.MelonLaunchOptions;
 
 [assembly: MelonInfo(typeof(OWO_IEYTD2.OWO_IEYTD2), "OWO_IEYTD2", "0.0.1", "OWO Game")]
 [assembly: MelonGame("Schell Games", "I Expect You To Die 2")]
@@ -85,13 +86,13 @@ namespace OWO_IEYTD2
                 String damageName = damageData.name;
                 if (damageName.Contains("GasDamage")|damageName.Contains("Suffocation") | damageName.Contains("PoisonGas"))
                 {
-                    //owoSkin.StartHeartBeat();
+                    owoSkin.StartHeartBeat();
                     if (!owoSkin.IsPlaying("GasDeath")) { owoSkin.Feel("GasDeath"); }
                     return;
                 }
                 if (damageName.Contains("Flame") | damageName.Contains("Fire"))
                 {
-                    //tactsuitVr.StartHeartBeat();
+                    owoSkin.StartHeartBeat();
                     if (!owoSkin.IsPlaying("FlameThrower")) { owoSkin.Feel("FlameThrower"); }
                     return;
                 }
@@ -134,7 +135,8 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix()
             {
-                owoSkin.StopThreads();
+                //Mandar sensacion de muerte.
+                owoSkin.StopAllHapticFeedback();
             }
         }
 
@@ -149,7 +151,7 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix()
             {
-                //tactsuitVr.LOG("Load shooter");
+                owoSkin.LOG("Arma cargada!");
                 shooterLoaded = true;
             }
         }

@@ -18,6 +18,7 @@ namespace MyOWOSkin
 
         public OWOSkin()
         {
+            RegisterAllSensationsFiles();
             InitializeOWO();
         }
 
@@ -98,8 +99,9 @@ namespace MyOWOSkin
         {
             while (true)
             {
-                HeartBeat_mrse.WaitOne();
+                //HeartBeat_mrse.WaitOne();
                 //bHapticsLib.bHapticsManager.PlayRegistered("HeartBeat");
+                Feel("HeartBeat");
                 Thread.Sleep(1000);
             }
         }
@@ -108,8 +110,9 @@ namespace MyOWOSkin
         {
             while (true)
             {
-                NeckTingle_mrse.WaitOne();
+                //NeckTingle_mrse.WaitOne();
                 //bHapticsLib.bHapticsManager.PlayRegistered("NeckTingleShort");
+                Feel("NeckTingleShort");
                 Thread.Sleep(2050);
             }
         }
@@ -118,8 +121,9 @@ namespace MyOWOSkin
         {
             while (true)
             {
-                TelekinesisR_mrse.WaitOne();
+                //TelekinesisR_mrse.WaitOne();
                 //bHapticsLib.bHapticsManager.PlayRegistered("Telekinesis_R");
+                Feel("Telekinesis_R");
                 Thread.Sleep(2050);
             }
         }
@@ -127,8 +131,9 @@ namespace MyOWOSkin
         {
             while (true)
             {
-                TelekinesisL_mrse.WaitOne();
+                //TelekinesisL_mrse.WaitOne();
                 //bHapticsLib.bHapticsManager.PlayRegistered("Telekinesis_L");
+                Feel("Telekinesis_L");
                 Thread.Sleep(2050);
             }
         }
@@ -154,7 +159,7 @@ namespace MyOWOSkin
             MelonLogger.Msg(logStr);
         }
 
-        void RegisterAllTactFiles()
+        void RegisterAllSensationsFiles()
         {
             string configPath = Directory.GetCurrentDirectory() + "\\Mods\\OWO";
             DirectoryInfo d = new DirectoryInfo(configPath);
@@ -182,7 +187,7 @@ namespace MyOWOSkin
         public void Feel(String key, float intensity = 1.0f, float duration = 1.0f)
         {
             OWO.Send(OWOGame.BakedSensation.Dart);
-            LOG("Dart sended");
+            LOG(key + " sent");
             //if (FeedbackMap.ContainsKey(key))
             //{
             //    OWO.Send(FeedbackMap[key]);
@@ -192,47 +197,48 @@ namespace MyOWOSkin
 
         public void GunRecoil(bool isRightHand, float intensity = 1.0f)
         {
-            float duration = 1.0f;
-            //var scaleOption = new bHapticsLib.ScaleOption(intensity, duration);
-            //var rotationFront = new bHapticsLib.RotationOption(0f, 0f);
             string postfix = "_L";
             if (isRightHand) { postfix = "_R"; }
-            string keyArm = "Recoil" + postfix;
-            string keyVest = "RecoilVest" + postfix;
-            //bHapticsLib.bHapticsManager.PlayRegistered(keyArm, keyArm, scaleOption, rotationFront);
-            //bHapticsLib.bHapticsManager.PlayRegistered(keyVest, keyVest, scaleOption, rotationFront);
+            string recoilWithArm = "Recoil" + postfix;
+
+            Feel(recoilWithArm);
         }
 
         public void StartHeartBeat()
         {
-            HeartBeat_mrse.Set();
+            Feel("HeartBeat");
+            //HeartBeat_mrse.Set();
         }
 
         public void StopHeartBeat()
         {
-            HeartBeat_mrse.Reset();
+            OWO.Stop();
+            //HeartBeat_mrse.Reset();
         }
 
         public void StartNeckTingle()
         {
-            NeckTingle_mrse.Set();
+            Feel("NeckTingleShort");
+            //NeckTingle_mrse.Set();
         }
 
         public void StopNeckTingle()
         {
-            NeckTingle_mrse.Reset();
+            OWO.Stop();
+            //NeckTingle_mrse.Reset();
         }
 
         public void StartTelekinesis(bool isRight)
-        {
-            if (isRight) { TelekinesisR_mrse.Set(); }
-            else { TelekinesisL_mrse.Set(); }
+        {            
+            if (isRight) Feel("Telekinesis_R");                          
+            else Feel("Telekinesis_L");
         }
 
         public void StopTelekinesis(bool isRight)
         {
-            if (isRight) { TelekinesisR_mrse.Reset(); StopHapticFeedback("Telekinesis_R"); }
-            else { TelekinesisL_mrse.Reset(); StopHapticFeedback("Telekinesis_L"); }
+            OWO.Stop();
+            //if (isRight) { TelekinesisR_mrse.Reset(); StopHapticFeedback("Telekinesis_R"); }
+            //else { TelekinesisL_mrse.Reset(); StopHapticFeedback("Telekinesis_L"); }
         }
 
         public bool IsPlaying(String effect)
@@ -243,24 +249,14 @@ namespace MyOWOSkin
 
         public void StopHapticFeedback(String effect)
         {
+            OWO.Stop();
             //bHapticsLib.bHapticsManager.StopPlaying(effect);
         }
 
         public void StopAllHapticFeedback()
         {
-            StopThreads();
-            foreach (String key in FeedbackMap.Keys)
-            {
-                //bHapticsLib.bHapticsManager.StopPlaying(key);
-            }
-        }
+            OWO.Stop();
 
-        public void StopThreads()
-        {
-            StopHeartBeat();
-            StopNeckTingle();
-            StopTelekinesis(true);
-            StopTelekinesis(false);
         }
 
 
