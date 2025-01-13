@@ -81,6 +81,18 @@ namespace MyOWOSkin
             return ips.ToArray();
         }
 
+        ~OWOSkin()
+        {
+            LOG("Destructor called");
+            DisconnectOwo();
+        }
+
+        public void DisconnectOwo()
+        {
+            LOG("Disconnecting Owo skin.");
+            OWO.Disconnect();
+        }
+
         public void HeartBeatFunc()
         {
             while (true)
@@ -141,8 +153,6 @@ namespace MyOWOSkin
             MelonLogger.Msg(logStr);
         }
 
-
-
         void RegisterAllTactFiles()
         {
             string configPath = Directory.GetCurrentDirectory() + "\\Mods\\OWO";
@@ -170,6 +180,8 @@ namespace MyOWOSkin
 
         public void Feel(String key, float intensity = 1.0f, float duration = 1.0f)
         {
+            OWO.Send(OWOGame.BakedSensation.Dart);
+
             if (FeedbackMap.ContainsKey(key))
             {
                 OWO.Send(FeedbackMap[key]);
