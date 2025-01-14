@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <OutputPath>C:\Program Files (x86)\Steam\steamapps\common\I Expect You To Die 2\Mods</OutputPath>
+    <OutputPath>\\192.168.213.106\Users\OWO\Documents\owo\Mods</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

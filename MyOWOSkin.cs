@@ -113,20 +113,20 @@ namespace MyOWOSkin
             }
         }
 
-        public void TelekinesisRFunc()
+        public async Task TelekinesisRFuncAsync()
         {
             while (telekinesisRIsActive)
             {                
                 Feel("Telekinesis_R");
-                Thread.Sleep(2050);
+                await Task.Delay(2050);
             }
         }
-        public void TelekinesisLFunc()
+        public async Task TelekinesisLFuncAsync()
         {
             while (telekinesisLIsActive)
             {
                 Feel("Telekinesis_L");
-                Thread.Sleep(2050);
+                await Task.Delay(2050);
             }
         }
 
@@ -189,7 +189,7 @@ namespace MyOWOSkin
 
         public void StopHeartBeat()
         {
-            heartBeatIsActive = true;
+            heartBeatIsActive = false;
         }
 
         public void StartNeckTingle()
@@ -202,7 +202,7 @@ namespace MyOWOSkin
 
         public void StopNeckTingle()
         {
-            neckTingleIsActive = true;
+            neckTingleIsActive = false;
         }
 
         public void StartTelekinesis(bool isRight)
@@ -212,14 +212,14 @@ namespace MyOWOSkin
                 if (!telekinesisRIsActive)
                 {
                     telekinesisRIsActive = true;
-                    TelekinesisRFunc();
+                    TelekinesisRFuncAsync();
                 }                
             }
             else {
                 if (!telekinesisLIsActive)
                 {
                     telekinesisLIsActive = true;
-                    TelekinesisLFunc();
+                    TelekinesisLFuncAsync();
                 }
             }
         }
