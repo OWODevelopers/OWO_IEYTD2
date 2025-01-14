@@ -115,20 +115,16 @@ namespace MyOWOSkin
 
         public void TelekinesisRFunc()
         {
-            while (true)
-            {
-                //TelekinesisR_mrse.WaitOne();
-                //bHapticsLib.bHapticsManager.PlayRegistered("Telekinesis_R");
+            while (telekinesisRIsActive)
+            {                
                 Feel("Telekinesis_R");
                 Thread.Sleep(2050);
             }
         }
         public void TelekinesisLFunc()
         {
-            while (true)
+            while (telekinesisLIsActive)
             {
-                //TelekinesisL_mrse.WaitOne();
-                //bHapticsLib.bHapticsManager.PlayRegistered("Telekinesis_L");
                 Feel("Telekinesis_L");
                 Thread.Sleep(2050);
             }
@@ -165,14 +161,13 @@ namespace MyOWOSkin
         }
 
         public void Feel(String key, float intensity = 1.0f, float duration = 1.0f)
-        {
-            OWO.Send(OWOGame.BakedSensation.Dart);
-            LOG(key + " sent");
-            //if (FeedbackMap.ContainsKey(key))
-            //{
-            //    OWO.Send(FeedbackMap[key]);
-            //}
-            //else LOG("Feedback not registered: " + key);
+        {                       
+            if (FeedbackMap.ContainsKey(key))
+            {
+                OWO.Send(FeedbackMap[key]);
+                LOG("SENSATION: " + key);
+            }
+            else LOG("Feedback not registered: " + key);
         }
 
         public void GunRecoil(bool isRightHand, float intensity = 1.0f)
