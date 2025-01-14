@@ -35,8 +35,8 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix(DamageData damageData)
             {
-                //tactsuitVr.LOG("ExplosionImpact");
-                //tactsuitVr.LOG(damageData.DeathDescription);
+                owoSkin.LOG("ExplosionImpact");
+                owoSkin.LOG(damageData.DeathDescription);
                 owoSkin.Feel("ExplosionFace");
             }
         }
@@ -47,7 +47,7 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix(DamageData damageData)
             {
-                //tactsuitVr.LOG(damageData.DamageRate.ToString());
+                owoSkin.LOG(damageData.DamageRate.ToString());
                 if (!owoSkin.IsPlaying("HitByLaser"))
                     { owoSkin.Feel("HitByLaser"); }
             }
@@ -59,8 +59,8 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix(DamageData damageData)
             {
-                //tactsuitVr.LOG("PenetratorImpact");
-                //tactsuitVr.LOG(damageData.DeathDescription);
+                owoSkin.LOG("PenetratorImpact");
+                owoSkin.LOG(damageData.DeathDescription);
                 owoSkin.Feel("ArrowPierce");
             }
         }
@@ -71,8 +71,8 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix(Vector3 impactDirection, DamageData damageData)
             {
-                //tactsuitVr.LOG("x: " + impactDirection.x.ToString() + " y: " + impactDirection.y.ToString() + " z: " + impactDirection.z.ToString());
-                //tactsuitVr.LOG(damageData.DeathDescription);
+                owoSkin.LOG("x: " + impactDirection.x.ToString() + " y: " + impactDirection.y.ToString() + " z: " + impactDirection.z.ToString());
+                owoSkin.LOG(damageData.DeathDescription);
                 owoSkin.Feel("BulletHit");
             }
         }
@@ -179,8 +179,8 @@ namespace OWO_IEYTD2
                     shooterLoaded = false;
                     bool isRight = false;
                     if (__instance.heldHand.HandIndex == 1) { isRight = true; }
-                    //tactsuitVr.LOG("Interactable name: " + __instance.name);
-                    //tactsuitVr.LOG(" ");
+                    owoSkin.LOG("Interactable name: " + __instance.name);
+                    owoSkin.LOG(" ");
                     owoSkin.GunRecoil(isRight, 0.6f);
                 }
             }
@@ -264,7 +264,7 @@ namespace OWO_IEYTD2
                 }
                 else
                 {
-                    //tactsuitVr.LOG("RigidBodyName: " + objectName);
+                    owoSkin.LOG("RigidBodyName: " + objectName);
                 }
             }
         }
@@ -316,7 +316,7 @@ namespace OWO_IEYTD2
                     {
                         tactsuitVr.LOG("AnimationEvent: " + index.ToString());
                         tactsuitVr.LOG(" ");
-                        //tactsuitVr.PlaybackHaptics("ExplosionUp");
+                        owoSkin.PlaybackHaptics("ExplosionUp");
                     }
                 }
 
@@ -328,7 +328,7 @@ namespace OWO_IEYTD2
                     {
                         tactsuitVr.LOG("AnimationTriggerResponse: " + key);
                         tactsuitVr.LOG(" ");
-                        //tactsuitVr.PlaybackHaptics("ExplosionUp");
+                        owoSkin.PlaybackHaptics("ExplosionUp");
                     }
                 }
         */
@@ -402,7 +402,7 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix(Transform transform)
             {
-                //tactsuitVr.LOG("FallToPosition");
+                owoSkin.LOG("FallToPosition");
                 owoSkin.Feel("ElevatorFall");
             }
         }
@@ -413,7 +413,7 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix(float amount)
             {
-                //tactsuitVr.LOG("Fall: " + amount.ToString());
+                owoSkin.LOG("Fall: " + amount.ToString());
                 owoSkin.Feel("ElevatorFall");
             }
         }
