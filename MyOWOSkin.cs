@@ -40,8 +40,7 @@ namespace MyOWOSkin
             if (OWO.ConnectionState == ConnectionState.Connected)
             {
                 suitDisabled = false;
-                LOG("OWO suit connected.");
-                OWO.Send(OWOGame.BakedSensation.Dart);
+                LOG("OWO suit connected.");                
             }
             if (suitDisabled) LOG("OWO is not enabled?!?!");
         }
