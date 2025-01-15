@@ -11,6 +11,7 @@ namespace MyOWOSkin
         public bool systemInitialized = false;
         private static bool heartBeatIsActive = false;
         private static bool neckTingleIsActive = false;
+        private static bool telekinesisIsActive = false;
         private static bool telekinesisRIsActive = false;
         private static bool telekinesisLIsActive = false;
         public Dictionary<String, Sensation> FeedbackMap = new Dictionary<String, Sensation>();
@@ -113,31 +114,27 @@ namespace MyOWOSkin
             }
         }
 
-        public async Task TelekinesisRFuncAsync()
+        public async Task TelekinesisFuncAsync()
         {
-            while (telekinesisRIsActive)
-            {                
-                Feel("Telekinesis_R");
-                await Task.Delay(2050);
-            }
-        }
+            String toFeel = "";
 
-        public async Task TelekinesisLFuncAsync()
-        {
-            while (telekinesisLIsActive)
+            while (telekinesisRIsActive || telekinesisLIsActive)
             {
-                Feel("Telekinesis_L");
-                await Task.Delay(2050);
-            }
-        }
+                if (telekinesisRIsActive)
+                    toFeel = "Telekinesis_R";
 
-        public async Task TelekinesisRLFuncAsync()
-        {
-            while (telekinesisLIsActive && telekinesisRIsActive)
-            {
-                Feel("Telekinesis_RL");
-                await Task.Delay(2050);
+                if (telekinesisLIsActive)
+                    toFeel = "Telekinesis_L";
+
+                if (telekinesisRIsActive && telekinesisLIsActive)
+                    toFeel = "Telekinesis_RL";
+
+
+                Feel(toFeel);
+                await Task.Delay(1000);
             }
+
+            telekinesisIsActive = false;
         }
 
         public void LOG(string logStr)
@@ -217,30 +214,17 @@ namespace MyOWOSkin
 
         public void StartTelekinesis(bool isRight)
         {
+            if(isRight)
+                telekinesisRIsActive = true;
 
-            if (isRight)
-            {
-                if (!telekinesisRIsActive)
-                {
-                    if (telekinesisLIsActive) { TelekinesisRLFuncAsync(); }
-                    else
-                    {
-                        telekinesisRIsActive = true;
-                        TelekinesisRFuncAsync();
-                    }
-                }                
-            }
-            else {
-                if (!telekinesisLIsActive)
-                {
-                    if (telekinesisRIsActive) { TelekinesisRLFuncAsync(); }
-                    else
-                    {
-                        telekinesisLIsActive = true;
-                        TelekinesisLFuncAsync();
-                    }
-                }
-            }
+            if (!isRight)
+                telekinesisLIsActive = true;
+
+            
+            if (!telekinesisIsActive)
+                TelekinesisFuncAsync();
+
+            telekinesisIsActive = true;
         }
 
         public void StopTelekinesis(bool isRight)
