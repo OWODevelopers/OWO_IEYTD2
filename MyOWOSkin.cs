@@ -86,12 +86,12 @@ namespace MyOWOSkin
         ~OWOSkin()
         {
             LOG("Destructor called");
-            DisconnectOwo();
+            DisconnectOWO();
         }
 
-        public void DisconnectOwo()
+        public void DisconnectOWO()
         {
-            LOG("Disconnecting Owo skin.");
+            LOG("Disconnecting OWO skin.");
             OWO.Disconnect();
         }
 
@@ -115,7 +115,7 @@ namespace MyOWOSkin
 
         public async Task TelekinesisFuncAsync()
         {
-            String toFeel = "";
+            string toFeel = "";
 
             while (telekinesisRIsActive || telekinesisLIsActive)
             {
