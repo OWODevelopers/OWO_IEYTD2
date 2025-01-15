@@ -121,11 +121,21 @@ namespace MyOWOSkin
                 await Task.Delay(2050);
             }
         }
+
         public async Task TelekinesisLFuncAsync()
         {
             while (telekinesisLIsActive)
             {
                 Feel("Telekinesis_L");
+                await Task.Delay(2050);
+            }
+        }
+
+        public async Task TelekinesisRLFuncAsync()
+        {
+            while (telekinesisLIsActive && telekinesisRIsActive)
+            {
+                Feel("Telekinesis_RL");
                 await Task.Delay(2050);
             }
         }
@@ -207,19 +217,28 @@ namespace MyOWOSkin
 
         public void StartTelekinesis(bool isRight)
         {
+
             if (isRight)
             {
                 if (!telekinesisRIsActive)
                 {
-                    telekinesisRIsActive = true;
-                    TelekinesisRFuncAsync();
+                    if (telekinesisLIsActive) { TelekinesisRLFuncAsync(); }
+                    else
+                    {
+                        telekinesisRIsActive = true;
+                        TelekinesisRFuncAsync();
+                    }
                 }                
             }
             else {
                 if (!telekinesisLIsActive)
                 {
-                    telekinesisLIsActive = true;
-                    TelekinesisLFuncAsync();
+                    if (telekinesisRIsActive) { TelekinesisRLFuncAsync(); }
+                    else
+                    {
+                        telekinesisLIsActive = true;
+                        TelekinesisLFuncAsync();
+                    }
                 }
             }
         }
