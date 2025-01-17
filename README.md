@@ -1,7 +1,7 @@
 ## I Expect you to die 2 OWO skin mod
 OWO mod for I Expect you to die 2.
 
-This mod is based on the work of (Florian)[https://github.com/floh-bhaptics].
+This mod is based on the work of [Florian](https://github.com/floh-bhaptics).
 
 ## Installation
 Get the MelonLoader installer and install the latest version of MelonLoader on your game executable.
