@@ -241,7 +241,7 @@ namespace MyOWOSkin
         public bool IsPlaying(String effect)
         {
             return false; //Puesto a proposito para tener un return.
-            //return bHapticsLib.bHapticsManager.IsPlaying(effect);
+            //return owoLib.owoManager.IsPlaying(effect);
         }
 
         public void StopAllHapticFeedback()

@@ -30,7 +30,7 @@ namespace OWO_IEYTD2
         #region Player hit
 
         [HarmonyPatch(typeof(Player), "OnExplosionImpact")]
-        public class bhaptics_PlayerExplosionImpact
+        public class owo_PlayerExplosionImpact
         {
             [HarmonyPostfix]
             public static void Postfix(DamageData damageData)
@@ -42,7 +42,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(Player), "OnLaserImpact")]
-        public class bhaptics_PlayerLaserImpact
+        public class owo_PlayerLaserImpact
         {
             [HarmonyPostfix]
             public static void Postfix(DamageData damageData)
@@ -54,7 +54,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(Player), "OnPenetratorImpact")]
-        public class bhaptics_PlayerPenetratorImpact
+        public class owo_PlayerPenetratorImpact
         {
             [HarmonyPostfix]
             public static void Postfix(DamageData damageData)
@@ -66,7 +66,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(Player), "OnShotImpact")]
-        public class bhaptics_PlayerShotImpact
+        public class owo_PlayerShotImpact
         {
             [HarmonyPostfix]
             public static void Postfix(Vector3 impactDirection, DamageData damageData)
@@ -78,7 +78,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(Player), "AddDamage")]
-        public class bhaptics_PlayerAddDamage
+        public class owo_PlayerAddDamage
         {
             [HarmonyPostfix]
             public static void Postfix(DamageData damageData)
@@ -120,7 +120,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(Player), "RemoveDamage")]
-        public class bhaptics_PlayerRemoveDamage
+        public class owo_PlayerRemoveDamage
         {
             [HarmonyPostfix]
             public static void Postfix(DamageData damageData)
@@ -130,7 +130,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(Player), "Kill")]
-        public class bhaptics_PlayerKill
+        public class owo_PlayerKill
         {
             [HarmonyPostfix]
             public static void Postfix()
@@ -146,7 +146,7 @@ namespace OWO_IEYTD2
 
 
         [HarmonyPatch(typeof(Shooter), "LoadProjectile")]
-        public class bhaptics_LoadProjectile
+        public class owo_LoadProjectile
         {
             [HarmonyPostfix]
             public static void Postfix()
@@ -157,7 +157,7 @@ namespace OWO_IEYTD2
         }
 /*
         [HarmonyPatch(typeof(Shooter), "UnloadProjectile")]
-        public class bhaptics_UnloadProjectile
+        public class owo_UnloadProjectile
         {
             [HarmonyPostfix]
             public static void Postfix()
@@ -168,7 +168,7 @@ namespace OWO_IEYTD2
         }
 */
         [HarmonyPatch(typeof(Interactable), "OnUse")]
-        public class bhaptics_UseGunbow
+        public class owo_UseGunbow
         {
             [HarmonyPostfix]
             public static void Postfix(Interactable __instance)
@@ -188,7 +188,7 @@ namespace OWO_IEYTD2
 
         /*
         [HarmonyPatch(typeof(Shooter), "Shoot")]
-        public class bhaptics_Shoot
+        public class owo_Shoot
         {
             [HarmonyPostfix]
             public static void Postfix()
@@ -199,7 +199,7 @@ namespace OWO_IEYTD2
         }
 */
         [HarmonyPatch(typeof(Interactable), "OnInteract")]
-        public class bhaptics_InteractableGrab
+        public class owo_InteractableGrab
         {
             [HarmonyPostfix]
             public static void Postfix(VRHandInput hand)
@@ -212,7 +212,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(Interactable), "OnRelease")]
-        public class bhaptics_InteractableRelease
+        public class owo_InteractableRelease
         {
             [HarmonyPostfix]
             public static void Postfix(VRHandInput hand)
@@ -224,7 +224,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(Interactable), "OnExit")]
-        public class bhaptics_InteractableExit
+        public class owo_InteractableExit
         {
             [HarmonyPostfix]
             public static void Postfix(VRHandInput hand)
@@ -236,7 +236,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(Edible), "Eat")]
-        public class bhaptics_EatEdible
+        public class owo_EatEdible
         {
             [HarmonyPostfix]
             public static void Postfix()
@@ -246,7 +246,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(Mouth), "OnTriggerEnter")]
-        public class bhaptics_EnterMouth
+        public class owo_EnterMouth
         {
             [HarmonyPostfix]
             public static void Postfix(Mouth __instance, Collider other)
@@ -270,7 +270,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(Explosive), "Explode")]
-        public class bhaptics_ExplosiveExplode
+        public class owo_ExplosiveExplode
         {
             [HarmonyPostfix]
             public static void Postfix()
@@ -284,7 +284,7 @@ namespace OWO_IEYTD2
         #region Player nervous
 
         [HarmonyPatch(typeof(Targetter), "BeginTargetSearch")]
-        public class bhaptics_BeginTargetSearch
+        public class owo_BeginTargetSearch
         {
             [HarmonyPostfix]
             public static void Postfix()
@@ -294,7 +294,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(Targetter), "EndTargetSearch")]
-        public class bhaptics_EndTargetSearch
+        public class owo_EndTargetSearch
         {
             [HarmonyPostfix]
             public static void Postfix()
@@ -309,7 +309,7 @@ namespace OWO_IEYTD2
 
         /*
                 [HarmonyPatch(typeof(AnimationUtils), "InvokeAnimationEvent")]
-                public class bhaptics_updateBackstageDebug
+                public class owo_updateBackstageDebug
                 {
                     [HarmonyPostfix]
                     public static void Postfix(int index)
@@ -321,7 +321,7 @@ namespace OWO_IEYTD2
                 }
 
                 [HarmonyPatch(typeof(AnimationEventListener), "TriggerResponse")]
-                public class bhaptics_TriggerResponse
+                public class owo_TriggerResponse
                 {
                     [HarmonyPostfix]
                     public static void Postfix(string key)
@@ -337,7 +337,7 @@ namespace OWO_IEYTD2
         #region Chapter 2: Private Jet
 
         [HarmonyPatch(typeof(JetLightningStrike), "PerformLightningStrike")]
-        public class bhaptics_LightningStrike
+        public class owo_LightningStrike
         {
             [HarmonyPostfix]
             public static void Postfix()
@@ -347,7 +347,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(JetMissileImpact), "PlayImpact")]
-        public class bhaptics_MissileImpact
+        public class owo_MissileImpact
         {
             [HarmonyPostfix]
             public static void Postfix()
@@ -375,7 +375,7 @@ namespace OWO_IEYTD2
         #region Chapter 6: Elevator
 
         [HarmonyPatch(typeof(ElevatorController), "PlayHaptics")]
-        public class bhaptics_StartElevatorHaptics
+        public class owo_StartElevatorHaptics
         {
             [HarmonyPostfix]
             public static void Postfix()
@@ -386,7 +386,7 @@ namespace OWO_IEYTD2
 
         /*
         [HarmonyPatch(typeof(ElevatorController), "StopHaptics")]
-        public class bhaptics_StopElevatorHaptics
+        public class owo_StopElevatorHaptics
         {
             [HarmonyPostfix]
             public static void Postfix()
@@ -397,7 +397,7 @@ namespace OWO_IEYTD2
         */
 
         [HarmonyPatch(typeof(ElevatorController), "FallToPosition")]
-        public class bhaptics_ElevatorFallToPosition
+        public class owo_ElevatorFallToPosition
         {
             [HarmonyPostfix]
             public static void Postfix(Transform transform)
@@ -408,7 +408,7 @@ namespace OWO_IEYTD2
         }
 
         [HarmonyPatch(typeof(ElevatorController), "Fall")]
-        public class bhaptics_ElevatorFall
+        public class owo_ElevatorFall
         {
             [HarmonyPostfix]
             public static void Postfix(float amount)
