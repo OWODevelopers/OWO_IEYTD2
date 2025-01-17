@@ -135,7 +135,7 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix()
             {
-                //Mandar sensacion de muerte.
+                owoSkin.Feel("Death");
                 owoSkin.StopAllHapticFeedback();
             }
         }
@@ -149,24 +149,14 @@ namespace OWO_IEYTD2
         public class owo_LoadProjectile
         {
             [HarmonyPostfix]
-            public static void Postfix()
+            public static void Postfix(Socket socket)
             {
                 owoSkin.LOG("Arma cargada!");
                 shooterLoaded = true;
+                owoSkin.Feel("WeaponLoaded");
             }
         }
-/*
-        [HarmonyPatch(typeof(Shooter), "UnloadProjectile")]
-        public class owo_UnloadProjectile
-        {
-            [HarmonyPostfix]
-            public static void Postfix()
-            {
-                tactsuitVr.LOG("Unload shooter");
-                shooterLoaded = false;
-            }
-        }
-*/
+
         [HarmonyPatch(typeof(Interactable), "OnUse")]
         public class owo_UseGunbow
         {
@@ -186,18 +176,6 @@ namespace OWO_IEYTD2
             }
         }
 
-        /*
-        [HarmonyPatch(typeof(Shooter), "Shoot")]
-        public class owo_Shoot
-        {
-            [HarmonyPostfix]
-            public static void Postfix()
-            {
-                tactsuitVr.LOG("Fire. IsRight: " + lastHandRightHand.ToString());
-                tactsuitVr.GunRecoil(lastHandRightHand, 0.6f);
-            }
-        }
-*/
         [HarmonyPatch(typeof(Interactable), "OnInteract")]
         public class owo_InteractableGrab
         {
@@ -383,18 +361,6 @@ namespace OWO_IEYTD2
                 owoSkin.Feel("ElevatorTingle");
             }
         }
-
-        /*
-        [HarmonyPatch(typeof(ElevatorController), "StopHaptics")]
-        public class owo_StopElevatorHaptics
-        {
-            [HarmonyPostfix]
-            public static void Postfix()
-            {
-                tactsuitVr.StopNeckTingle();
-            }
-        }
-        */
 
         [HarmonyPatch(typeof(ElevatorController), "FallToPosition")]
         public class owo_ElevatorFallToPosition
