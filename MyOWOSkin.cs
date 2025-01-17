@@ -99,7 +99,7 @@ namespace MyOWOSkin
         {
             while (heartBeatIsActive)
             {                
-                Feel("HeartBeat");
+                Feel("HeartBeat", 0);
                 await Task.Delay(1000);
             }
         }
@@ -108,7 +108,7 @@ namespace MyOWOSkin
         {
             while (neckTingleIsActive)
             {                
-                Feel("NeckTingleShort");
+                Feel("NeckTingleShort", 0);
                 await Task.Delay(2050);
             }
         }
@@ -129,7 +129,7 @@ namespace MyOWOSkin
                     toFeel = "Telekinesis_RL";
 
 
-                Feel(toFeel);
+                Feel(toFeel,2);
                 await Task.Delay(1000);
             }
 
@@ -166,11 +166,11 @@ namespace MyOWOSkin
             systemInitialized = true;
         }
 
-        public void Feel(String key, float intensity = 1.0f, float duration = 1.0f)
+        public void Feel(String key, int Priority,float intensity = 1.0f, float duration = 1.0f)
         {                       
             if (FeedbackMap.ContainsKey(key))
             {
-                OWO.Send(FeedbackMap[key]);
+                OWO.Send(FeedbackMap[key].WithPriority(Priority));
                 LOG("SENSATION: " + key);
             }
             else LOG("Feedback not registered: " + key);
@@ -182,7 +182,7 @@ namespace MyOWOSkin
             if (isRightHand) { postfix = "_R"; }
             string recoilWithArm = "Recoil" + postfix;
 
-            Feel(recoilWithArm);
+            Feel(recoilWithArm, 4);
         }
 
         public void StartHeartBeat()

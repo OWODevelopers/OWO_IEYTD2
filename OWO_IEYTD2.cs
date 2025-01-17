@@ -24,7 +24,7 @@ namespace OWO_IEYTD2
         public override void OnInitializeMelon()
         {
             owoSkin = new OWOSkin();
-            owoSkin.Feel("HeartBeat");
+            owoSkin.Feel("HeartBeat", 0);
         }
 
         #region Player hit
@@ -37,7 +37,7 @@ namespace OWO_IEYTD2
             {
                 owoSkin.LOG("ExplosionImpact");
                 owoSkin.LOG(damageData.DeathDescription);
-                owoSkin.Feel("ExplosionFace");
+                owoSkin.Feel("ExplosionFace", 5);
             }
         }
 
@@ -49,7 +49,7 @@ namespace OWO_IEYTD2
             {
                 owoSkin.LOG(damageData.DamageRate.ToString());
                 if (!owoSkin.IsPlaying("HitByLaser"))
-                    { owoSkin.Feel("HitByLaser"); }
+                    { owoSkin.Feel("HitByLaser",5); }
             }
         }
 
@@ -61,7 +61,7 @@ namespace OWO_IEYTD2
             {
                 owoSkin.LOG("PenetratorImpact");
                 owoSkin.LOG(damageData.DeathDescription);
-                owoSkin.Feel("ArrowPierce");
+                owoSkin.Feel("ArrowPierce",5);
             }
         }
 
@@ -73,7 +73,7 @@ namespace OWO_IEYTD2
             {
                 owoSkin.LOG("x: " + impactDirection.x.ToString() + " y: " + impactDirection.y.ToString() + " z: " + impactDirection.z.ToString());
                 owoSkin.LOG(damageData.DeathDescription);
-                owoSkin.Feel("BulletHit");
+                owoSkin.Feel("BulletHit",5);
             }
         }
 
@@ -87,28 +87,28 @@ namespace OWO_IEYTD2
                 if (damageName.Contains("GasDamage")|damageName.Contains("Suffocation") | damageName.Contains("PoisonGas"))
                 {
                     owoSkin.StartHeartBeat();
-                    if (!owoSkin.IsPlaying("GasDeath")) { owoSkin.Feel("GasDeath"); }
+                    if (!owoSkin.IsPlaying("GasDeath")) { owoSkin.Feel("GasDeath",6); }
                     return;
                 }
                 if (damageName.Contains("Flame") | damageName.Contains("Fire"))
                 {
                     owoSkin.StartHeartBeat();
-                    if (!owoSkin.IsPlaying("FlameThrower")) { owoSkin.Feel("FlameThrower"); }
+                    if (!owoSkin.IsPlaying("FlameThrower")) { owoSkin.Feel("FlameThrower",6); }
                     return;
                 }
                 if (damageName.Contains("PendulumDamage"))
                 {
-                    owoSkin.Feel("AxeHit");
+                    owoSkin.Feel("AxeHit",6);
                     return;
                 }
                 if (damageName.Contains("Electrocution"))
                 {
-                    owoSkin.Feel("Electrocution");
+                    owoSkin.Feel("Electrocution",6);
                     return;
                 }
                 if (damageName.Contains("MS_ExplosiveTntDamage"))
                 {
-                    owoSkin.Feel("ExplosionFace");
+                    owoSkin.Feel("ExplosionFace",6);
                     return;
                 }
                 if (damageName.Contains("DartDamage")|damageName.Contains("Explosion")|damageName.Contains("Grenade")|
@@ -135,7 +135,7 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix()
             {
-                owoSkin.Feel("Death");
+                owoSkin.Feel("Death",7);
                 owoSkin.StopAllHapticFeedback();
             }
         }
@@ -153,7 +153,7 @@ namespace OWO_IEYTD2
             {
                 owoSkin.LOG("Arma cargada!");
                 shooterLoaded = true;
-                owoSkin.Feel("WeaponLoaded");
+                owoSkin.Feel("WeaponLoaded",3);
             }
         }
 
@@ -219,7 +219,7 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix()
             {
-                owoSkin.Feel("Eating");
+                owoSkin.Feel("Eating",3);
             }
         }
 
@@ -234,11 +234,11 @@ namespace OWO_IEYTD2
                 catch { return; }
                 if (objectName.Contains("Cigar"))
                 {
-                    owoSkin.Feel("Smoking");
+                    owoSkin.Feel("Smoking",3);
                 }
                 else if (objectName.Contains("Glass")|objectName.Contains("Bottle") | objectName.Contains("Cup") | objectName.Contains("Straw"))
                 {
-                    owoSkin.Feel("Drinking");
+                    owoSkin.Feel("Drinking",3);
                 }
                 else
                 {
@@ -253,7 +253,7 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix()
             {
-                owoSkin.Feel("ExplosionUp");
+                owoSkin.Feel("ExplosionUp",6);
             }
         }
 
@@ -320,7 +320,7 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix()
             {
-                owoSkin.Feel("Thunder");
+                owoSkin.Feel("Thunder",4);
             }
         }
 
@@ -330,7 +330,7 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix()
             {
-                owoSkin.Feel("ExplosionFace");
+                owoSkin.Feel("ExplosionFace",6);
             }
         }
 
@@ -358,7 +358,7 @@ namespace OWO_IEYTD2
             [HarmonyPostfix]
             public static void Postfix()
             {
-                owoSkin.Feel("ElevatorTingle");
+                owoSkin.Feel("ElevatorTingle",3);
             }
         }
 
@@ -369,7 +369,7 @@ namespace OWO_IEYTD2
             public static void Postfix(Transform transform)
             {
                 owoSkin.LOG("FallToPosition");
-                owoSkin.Feel("ElevatorFall");
+                owoSkin.Feel("ElevatorFall",7);
             }
         }
 
@@ -380,7 +380,7 @@ namespace OWO_IEYTD2
             public static void Postfix(float amount)
             {
                 owoSkin.LOG("Fall: " + amount.ToString());
-                owoSkin.Feel("ElevatorFall");
+                owoSkin.Feel("ElevatorFall",7);
             }
         }
 
