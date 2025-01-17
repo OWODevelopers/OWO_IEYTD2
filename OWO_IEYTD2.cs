@@ -11,7 +11,7 @@ using Il2CppSG.Phoenix.Assets.Code.PrivateJet;
 using Il2CppSG.Phoenix.Assets.Code.Elevator;
 using static MelonLoader.MelonLaunchOptions;
 
-[assembly: MelonInfo(typeof(OWO_IEYTD2.OWO_IEYTD2), "OWO_IEYTD2", "0.0.1", "OWO Game")]
+[assembly: MelonInfo(typeof(OWO_IEYTD2.OWO_IEYTD2), "OWO_IEYTD2", "1.0.1", "OWO Game")]
 [assembly: MelonGame("Schell Games", "I Expect You To Die 2")]
 
 namespace OWO_IEYTD2
